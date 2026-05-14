@@ -1,7 +1,9 @@
 package com.merkoventa.productosApi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "usuarios")
@@ -25,13 +27,14 @@ public class Usuario {
     private String usuarioContrasena;
 
     @Column(name = "edadUsuario")
-    @NotBlank(message = "La edad de usuario es obligatoria")
-    private int edadUsuario;
+    @NotNull(message = "La edad es obligatoria")
+    @Min(value = 1, message = "La edad debe ser mayor a 0")
+    private Integer edadUsuario;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String nombreUsuario, String apellidoUsuario, String usuarioContrasena, int edadUsuario) {
+    public Usuario(Long id, String nombreUsuario, String apellidoUsuario, String usuarioContrasena, Integer edadUsuario) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.apellidoUsuario = apellidoUsuario;
@@ -71,11 +74,11 @@ public class Usuario {
         this.usuarioContrasena = usuarioContrasena;
     }
 
-    public int getEdadUsuario() {
+    public Integer getEdadUsuario() {
         return edadUsuario;
     }
 
-    public void setEdadUsuario(int edadUsuario) {
+    public void setEdadUsuario(Integer edadUsuario) {
         this.edadUsuario = edadUsuario;
     }
 }
