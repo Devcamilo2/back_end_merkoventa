@@ -18,7 +18,7 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @PostMapping
-    public Usuario guardarUsuario (@RequestBody Usuario usuario){
+    public Usuario guardarUsuario (@Valid @RequestBody Usuario usuario){
         return usuarioService.save(usuario);
     }
 
@@ -33,14 +33,14 @@ public class UsuarioController {
         return usuarioService.findById(id);
     }
 
-    @GetMapping("/listarusuarios")
+    @GetMapping
     public List<Usuario> listar (){
         return usuarioService.findAll();
     }
 
-    @PutMapping("/actualizarusuario/{id}")
-    public Usuario actualizar (@Valid @PathVariable Long id,
-                               @RequestBody Usuario usuario){
+    @PutMapping("/{id}")
+    public Usuario actualizar (@PathVariable Long id,
+                               @Valid @RequestBody Usuario usuario){
         Usuario usuarioExistente = usuarioService.findById(id).orElse(null);
         if (usuarioExistente != null){
             usuarioExistente.setNombreUsuario(usuario.getNombreUsuario());
@@ -50,7 +50,7 @@ public class UsuarioController {
 
             return usuarioService.save (usuarioExistente);
         }
-        return  null;
+        throw new RuntimeException("Usuario no encontrado");
     }
     @DeleteMapping ("/{id}")
     public void eliminar (@PathVariable Long id){
