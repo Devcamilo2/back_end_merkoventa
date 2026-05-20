@@ -24,9 +24,9 @@ public class CarritoServiceImpl implements CarritoService {
         return carritoRepository.findAll();
     }
 
-    private double calcularSubTotal (double precio , int cantidad){
-        double subtotal = cantidad * precio;
-        return subtotal;
+    private double calcularSubTotal (double precioProducto , int cantidadProducto){
+        double subtotalCarrito = cantidadProducto * precioProducto;
+        return subtotalCarrito;
     }
 
     @Override
