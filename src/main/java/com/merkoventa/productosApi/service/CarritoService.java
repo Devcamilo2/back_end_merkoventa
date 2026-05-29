@@ -1,5 +1,6 @@
 package com.merkoventa.productosApi.service;
 
+import com.merkoventa.productosApi.dto.CarritoDto;
 import com.merkoventa.productosApi.model.Carrito;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface CarritoService {
 
     public Optional<Carrito> findById(Long id);
     public List<Carrito> findAll();
-    public Carrito save(Carrito carrito);
+    public Carrito save(CarritoDto carritoDto);
     public boolean existsById(Long id);
     public void deleteById(Long id);
 }

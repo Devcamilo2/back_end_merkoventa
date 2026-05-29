@@ -1,5 +1,6 @@
 package com.merkoventa.productosApi.controller;
 
+import com.merkoventa.productosApi.dto.CarritoDto;
 import com.merkoventa.productosApi.model.Carrito;
 import com.merkoventa.productosApi.service.CarritoService;
 import jakarta.validation.Valid;
@@ -28,8 +29,8 @@ public class CarritoController {
     }
 
     @PostMapping("/agregarcarrito")
-    public Carrito crear (@Valid @RequestBody Carrito carrito){
-        return carritoService.save(carrito);
+    public Carrito crear (@Valid @RequestBody CarritoDto carritoDto){
+        return carritoService.save(carritoDto);
     }
 
     @DeleteMapping("/{id}")

@@ -1,6 +1,8 @@
 package com.merkoventa.productosApi.service;
 
+import com.merkoventa.productosApi.dto.CarritoDto;
 import com.merkoventa.productosApi.model.Carrito;
+import com.merkoventa.productosApi.model.Producto;
 import com.merkoventa.productosApi.repository.CarritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class CarritoServiceImpl implements CarritoService {
 
     @Autowired
     CarritoRepository carritoRepository;
+
+    @Autowired
+    ProductoService productoService;
 
     @Override
     public Optional<Carrito> findById(Long id) {
@@ -30,7 +35,16 @@ public class CarritoServiceImpl implements CarritoService {
     }
 
     @Override
-    public Carrito save(Carrito carrito) {
+    public Carrito save(CarritoDto carritoDto) {
+        Carrito carrito = new Carrito();
+        Optional<Producto> producto = productoService.findById(carritoDto.getIdProducto());
+        if (producto.isEmpty()){
+            throw new RuntimeException("Error el producto no existe");
+        }
+        Producto productoEncontrado = producto.get();
+        carrito.setNombreProducto(productoEncontrado.getNombre());
+        carrito.setPrecioProducto(productoEncontrado.getPrecio());
+        carrito.setCantidadProducto(carritoDto.getCantidadProducto());
         carrito.setSubtotalCarrito(calcularSubTotal(carrito.getPrecioProducto(), carrito.getCantidadProducto()));
         return carritoRepository.save(carrito);
     }
